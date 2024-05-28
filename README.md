@@ -1,2 +1,1 @@
-# universe-unlimited
-Some app to render our galaxy and hopefully more
+Rendering our solar system the our start cluster, the milky way and hopefully all the info about our universe.

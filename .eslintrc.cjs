@@ -23,6 +23,7 @@ module.exports = {
 	},
 	plugins: ['react-refresh'],
 	rules: {
+		'react-hooks/exhaustive-deps': 'off',
 		'react/no-unknown-property': 'off',
 		'react/display-name': 'off',
 		'no-unused-vars': 'off',

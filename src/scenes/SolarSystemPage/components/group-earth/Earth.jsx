@@ -10,9 +10,9 @@ const Earth = React.memo(({ displacementScale }) => {
 	const earthPositionRef = useRef(new THREE.Vector3(8, 0, 0));
 	
 	const [earthTexture, earthNormalMap, earthSpecularMap, earthDisplacementMap, earthEmissiveMap] = useTexture([
-		'/assets/earth_daymap.jpeg',
-		'/assets/earth_normal_map.jpeg',
-		'/assets/earth_specular_map.jpeg',
+		'/assets/earth_day_small.jpg',
+		'/assets/earth_normal_small.jpeg',
+		'/assets/earth_specular_small.jpeg',
 		'/assets/earth_displacement_map.jpg',
 		'/assets/earth_nightmap.jpeg',
 		

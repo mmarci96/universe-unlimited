@@ -1,18 +1,17 @@
-import SolarSystem from './scenes/SolarSystem';
-import { Canvas } from '@react-three/fiber';
-import { OrbitControls } from '@react-three/drei';
+import React from 'react'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import HomePage from './scenes/HomePage'
+import SolarSystemPage from './scenes/SolarSystemPage'
 
-const App = () => {
-	return (
-		<div className='main w-full h-[100vh]'>
-				<Canvas camera={{ fov: 55, near: 0.1, far: 1000, position: [16, 8.5, 19.5] }} shadows>
-					<color attach='background' args={['black']} />
+function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path='/solar-system' element={<SolarSystemPage/>}/>
+      </Routes>
+    </BrowserRouter>
+  )
+}
 
-					<OrbitControls />
-					<SolarSystem />
-				</Canvas>
-			</div>
-	);
-};
-
-export default App;
+export default App

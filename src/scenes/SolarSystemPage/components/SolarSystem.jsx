@@ -22,7 +22,7 @@ const SolarSystem = () => {
 				intensity={3}
 				castShadow
 			/> */}
-			<ambientLight intensity={0.1} />
+			<ambientLight intensity={0.15} />
 			<Sun />
 			<Earth displacementScale={0.15} />
 		</>

@@ -1,6 +1,6 @@
 import { useTexture } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useRef, useEffect, useState } from 'react';
 import Moon from './Moon';
 import IssSpaceStation from './ISS';
 import * as THREE from 'three';
@@ -8,6 +8,7 @@ import * as THREE from 'three';
 const Earth = React.memo(({ displacementScale }) => {
 	const earthRef = useRef();
 	const earthPositionRef = useRef(new THREE.Vector3(12, 0, 0));
+	const [hovered, hover] = useState(false)
 	
 	const [earthTexture, earthNormalMap, earthSpecularMap, earthDisplacementMap, earthEmissiveMap] = useTexture([
 		'/assets/earth_day_small.jpg',
@@ -29,6 +30,9 @@ const Earth = React.memo(({ displacementScale }) => {
 		earthPositionRef.current = earthRef.current.position
 
 	})
+	useEffect(()=>{
+		document.body.style.cursor = hovered ? 'pointer' : 'auto';
+	},[hovered])
 
 	useFrame(({ clock }) => {
 		updateEarthPosition(clock)
@@ -36,7 +40,7 @@ const Earth = React.memo(({ displacementScale }) => {
 
 	return (
 		<group ref={earthRef} position={[8, 0, 0]}>
-			<mesh receiveShadow castShadow>
+			<mesh receiveShadow castShadow onPointerOver={()=> hover(true)} onPointerOut={()=>hover(false)} >
 				<sphereGeometry args={[1, 32, 32]} />
 				<meshPhongMaterial
 					map={earthTexture}
@@ -47,7 +51,7 @@ const Earth = React.memo(({ displacementScale }) => {
 					displacementScale={displacementScale}
 					emissiveMap={earthEmissiveMap}
 					emissive={0xffffff}
-					emissiveIntensity={1}
+					emissiveIntensity={hovered ? 10 : 1.5}
 				/>
 			</mesh>
 			<IssSpaceStation />

@@ -1,19 +1,24 @@
 import { useTexture } from '@react-three/drei';
 import { useFrame, useThree } from '@react-three/fiber';
-import React, { useCallback, useRef, useEffect, useState } from 'react';
+import React, { useRef, useCallback, useEffect, useState } from 'react';
 import Moon from './Moon';
-import IssSpaceStation from './ISS';
+import ISS from './ISS';
 
-import * as TWEEN from '@tweenjs/tween.js';
 import * as THREE from 'three';
+import * as TWEEN from '@tweenjs/tween.js';
 
-const Earth = React.memo(({ displacementScale }) => {
+const Earth = React.memo(({ displacementScale, orbitControlsOn }) => {
 	const earthRef = useRef();
-	const clockRef = useRef(new THREE.Clock());
+
+	const clockRef = useRef(new THREE.Clock()); // Create a reference to the clock
+
 	const { camera } = useThree();
+
 	const [hovered, hover] = useState(false);
 	const [followingEarth, setFollowingEarth] = useState(false);
+
 	const [cameraPosition, setCameraPosition] = useState(new THREE.Vector3(16.14, 8.32, 19.81));
+
 	const [cameraTarget, setCameraTarget] = useState(new THREE.Vector3(0, 0, 0));
 
 	const [earthTexture, earthNormalMap, earthSpecularMap, earthDisplacementMap, earthEmissiveMap] =
@@ -26,17 +31,17 @@ const Earth = React.memo(({ displacementScale }) => {
 		]);
 
 	const updateEarthPosition = useCallback(() => {
-		const angle = clockRef.current.getElapsedTime() * 0.5;
-		const distance = 14;
+		// Calculate the Earth's position based on its angle from the Sun
+		const angle = clockRef.current.getElapsedTime() * 0.3;
+		const distance = 24;
 		const x = Math.sin(angle) * distance;
 		const z = Math.cos(angle) * distance;
 		earthRef.current.position.set(x, 0, z);
-
 		earthRef.current.rotation.y += 0.002;
-	});
+	}, []);
 
 	const toggleFollowingEarth = () => {
-		followingEarth ? setFollowingEarth(false) : setFollowingEarth(true);
+		setFollowingEarth((prevFollowingEarth) => !prevFollowingEarth);
 	};
 
 	useEffect(() => {
@@ -54,6 +59,7 @@ const Earth = React.memo(({ displacementScale }) => {
 				earthPositionRef.y + 2,
 				earthPositionRef.z + 5,
 			);
+			//Tween for camera position
 			new TWEEN.Tween(cameraPosition)
 				.to(cameraTargetPosition, 1000)
 				.easing(TWEEN.Easing.Quadratic.Out)
@@ -62,6 +68,7 @@ const Earth = React.memo(({ displacementScale }) => {
 				})
 				.start();
 
+			//Tween for camera targeting
 			new TWEEN.Tween(cameraTarget)
 				.to(earthPositionRef, 1000)
 				.easing(TWEEN.Easing.Quadratic.Out)
@@ -96,19 +103,22 @@ const Earth = React.memo(({ displacementScale }) => {
 
 	useFrame(() => {
 		updateEarthPosition();
-		tweenLogic();
+		if (!orbitControlsOn) {
+			tweenLogic();
+		}
 	});
 
 	return (
 		<group ref={earthRef}>
 			<mesh
-				receiveShadow
 				castShadow
-				onClick={() => toggleFollowingEarth()}
+				receiveShadow
+				onClick={toggleFollowingEarth}
 				onPointerOver={() => hover(true)}
 				onPointerOut={() => hover(false)}
 			>
-				<sphereGeometry args={[1, 32, 32]} />
+				{/* Radius , X-axis , Y-axis */}
+				<sphereGeometry args={[1.4, 32, 32]} />
 				<meshPhongMaterial
 					map={earthTexture}
 					normalMap={earthNormalMap}
@@ -118,10 +128,10 @@ const Earth = React.memo(({ displacementScale }) => {
 					displacementScale={displacementScale}
 					emissiveMap={earthEmissiveMap}
 					emissive={0xffffff}
-					emissiveIntensity={hovered ? 10 : 1.5}
+					emissiveIntensity={hovered ? 20 : 1.5}
 				/>
 			</mesh>
-			<IssSpaceStation />
+			<ISS />
 			<Moon />
 		</group>
 	);

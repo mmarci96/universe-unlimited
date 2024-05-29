@@ -15,7 +15,7 @@ const Moon = React.memo(() => {
 
 	return (
 		<mesh ref={moonRef} position={[4, 0, 0]} castShadow receiveShadow>
-			<sphereGeometry args={[0.5, 32, 32]} />
+			<sphereGeometry args={[0.3, 32, 32]} />
 			<meshPhongMaterial
 				map={moonTexture}
 				emissiveMap={moonTexture}

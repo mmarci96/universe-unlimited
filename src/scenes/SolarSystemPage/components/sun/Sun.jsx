@@ -11,14 +11,14 @@ const Sun = React.memo(() => {
 
 	return (
 		<mesh ref={sunRef} position={[0, 0, 0]}>
-			<sphereGeometry args={[2, 32, 32]} />
+			<sphereGeometry args={[8, 32, 32]} />
 			<meshPhongMaterial
 				map={sunTexture}
 				emissiveMap={sunTexture}
-				emissiveIntensity={0.6}
+				emissiveIntensity={1.6}
 				emissive={0xffffff}
 			/>
-			<pointLight castShadow intensity={384} />
+			<pointLight castShadow intensity={2048} />
 		</mesh>
 	);
 });

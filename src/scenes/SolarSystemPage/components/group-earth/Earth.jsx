@@ -7,7 +7,7 @@ import * as THREE from 'three';
 
 const Earth = React.memo(({ displacementScale }) => {
 	const earthRef = useRef();
-	const earthPositionRef = useRef(new THREE.Vector3(8, 0, 0));
+	const earthPositionRef = useRef(new THREE.Vector3(12, 0, 0));
 	
 	const [earthTexture, earthNormalMap, earthSpecularMap, earthDisplacementMap, earthEmissiveMap] = useTexture([
 		'/assets/earth_day_small.jpg',

@@ -3,7 +3,8 @@ import AnimatedStars from './AnimatedStars';
 import Earth from './group-earth/Earth';
 import { useRef } from 'react';
 import * as THREE from 'three';
-import Sun from './Sun';
+import Sun from './sun/Sun';
+import { Perf } from 'r3f-perf';
 
 const SolarSystem = () => {
 	const directionalLightRef = useRef();
@@ -12,7 +13,7 @@ const SolarSystem = () => {
 	useHelper(directionalLightRefTwo, THREE.DirectionalLightHelper, 1, 'hotpink');
 	return (
 		<>
-			<color attach='background' args={['black']} />
+			<Perf />
 			<AnimatedStars />
 			{/* <directionalLight ref={directionalLightRef} position={[0, 0, 10]} intensity={3} castShadow />
 			<directionalLight
@@ -22,7 +23,6 @@ const SolarSystem = () => {
 				castShadow
 			/> */}
 			<ambientLight intensity={0.1} />
-
 			<Sun />
 			<Earth displacementScale={0.15} />
 		</>

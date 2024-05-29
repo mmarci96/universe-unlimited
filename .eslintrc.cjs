@@ -24,6 +24,7 @@ module.exports = {
 	plugins: ['react-refresh'],
 	rules: {
 		'react/no-unknown-property': 'off',
+		'react/display-name': 'off',
 		'no-unused-vars': 'off',
 		'react/prop-types': 'off',
 		'react/jsx-no-target-blank': 'off',

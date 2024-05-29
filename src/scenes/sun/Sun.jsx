@@ -1,8 +1,8 @@
 import { useTexture } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
-import { useRef } from 'react';
+import React, { useRef } from 'react';
 
-const Sun = () => {
+const Sun = React.memo(() => {
 	const sunRef = useRef();
 	const sunTexture = useTexture('/assets/sun_map.jpeg');
 	useFrame(() => {
@@ -18,9 +18,9 @@ const Sun = () => {
 				emissiveIntensity={0.6}
 				emissive={0xffffff}
 			/>
-			<pointLight castShadow intensity={384}/>
+			<pointLight castShadow intensity={384} />
 		</mesh>
 	);
-};
+});
 
 export default Sun;
